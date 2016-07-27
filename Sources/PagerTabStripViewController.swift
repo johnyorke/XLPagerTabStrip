@@ -130,7 +130,6 @@ public class PagerTabStripViewController: UIViewController, UIScrollViewDelegate
         let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
         let navBarHeight = navigationController?.navigationBar.frame.size.height
         let yOrigin : CGFloat = -(statusBarHeight+navBarHeight!)
-        print(yOrigin)
         if animated && pagerBehaviour.skipIntermediateViewControllers && abs(currentIndex - index) > 1 {
             var tmpViewControllers = viewControllers
             let currentChildVC = viewControllers[currentIndex]

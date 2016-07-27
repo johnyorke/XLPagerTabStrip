@@ -127,6 +127,10 @@ public class PagerTabStripViewController: UIViewController, UIScrollViewDelegate
             currentIndex = index
             return
         }
+        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
+        let navBarHeight = navigationController?.navigationBar.frame.size.height
+        let yOrigin : CGFloat = -(statusBarHeight+navBarHeight!)
+        print(yOrigin)
         if animated && pagerBehaviour.skipIntermediateViewControllers && abs(currentIndex - index) > 1 {
             var tmpViewControllers = viewControllers
             let currentChildVC = viewControllers[currentIndex]
@@ -135,13 +139,12 @@ public class PagerTabStripViewController: UIViewController, UIScrollViewDelegate
             tmpViewControllers[currentIndex] = fromChildVC
             tmpViewControllers[fromIndex] = currentChildVC
             pagerTabStripChildViewControllersForScrolling = tmpViewControllers
-            containerView.setContentOffset(CGPointMake(pageOffsetForChildIndex(index: fromIndex), 0), animated: false)
+            containerView.setContentOffset(CGPointMake(pageOffsetForChildIndex(index: fromIndex), yOrigin), animated: false)
             (navigationController?.view ?? view).userInteractionEnabled = false
-            containerView.setContentOffset(CGPointMake(pageOffsetForChildIndex(index: index), 0), animated: true)
+            containerView.setContentOffset(CGPointMake(pageOffsetForChildIndex(index: index), yOrigin), animated: true)
         }
         else {
-            (navigationController?.view ?? view).userInteractionEnabled = false
-            containerView.setContentOffset(CGPointMake(pageOffsetForChildIndex(index: index), 0), animated: animated)
+            containerView.setContentOffset(CGPointMake(pageOffsetForChildIndex(index: index), yOrigin), animated: animated)
         }
     }
     
